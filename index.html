@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Two Good Co</title>
+    <title>Two Good Coo</title>
     <meta name="description"
-        content="Changing the course of lives through beautiful food and design. Supporting women escaping domestic violence through employment and training.">
-    <meta name="keywords" content="social enterprise, catering, organic food, social impact, community support">
-    <meta name="theme-color" content="#2e2e2e">
+        content="A social enterprise changing lives through employment, training, and beautiful organic food. Supporting women escaping domestic violence.">
+    <meta name="keywords" content="social enterprise, catering, organic food, social impact, women empowerment">
+    <meta name="theme-color" content="#1a1a1a">
 
     <meta property="og:title" content="Two Good Co | Purposeful Design & Catering">
     <meta property="og:description" content="Changing the course of lives through beautiful food and design.">
@@ -16,13 +16,12 @@
 
     <link rel="shortcut icon" href="https://pbs.twimg.com/profile_images/1499265096006000640/ZhEnSTch_400x400.jpg"
         type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -32,16 +31,8 @@
 
     <div id="loading-screen">
         <div class="loader">
-            <svg width="106" height="83" viewBox="0 0 106 83" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_2228_162)">
-                    <path d="M5.50062 6.4473H0V0.557617H17.7807V6.4473H12.2464V25.4842H5.50062V6.4473Z"
-                        fill="currentColor"></path>
-                    <path
-                        d="M49.8936 75.4543C50.5724 75.4475 51.238 75.6443 51.8057 76.0194C52.3733 76.3946 52.8176 76.9313 53.082 77.5614C53.3464 78.1915 53.4191 78.8865 53.2908 79.5583C53.1624 80.2301 52.8389 80.8483 52.3612 81.3344C51.8835 81.8205 51.2733 82.1526 50.608 82.2886C49.9426 82.4246 49.2522 82.3582 48.6244 82.098C47.9965 81.8378 47.4596 81.3954 47.0817 80.8271C46.7038 80.2587 46.502 79.59 46.502 78.9059C46.498 77.9951 46.853 77.12 47.4889 76.4728C48.1249 75.8256 48.9898 75.4593 49.8936 75.4543Z"
-                        fill="currentColor"></path>
-                </g>
-            </svg>
-            <p>Loading Experience...</p>
+            <div class="loader-circle"></div>
+            <p>Crafting Experience...</p>
         </div>
     </div>
 
@@ -62,12 +53,6 @@
                             <rect width="106" height="82.3538" fill="white"></rect>
                         </clipPath>
                     </defs>
-                </svg>
-                <svg id="twogoodlogo" width="62" height="63" viewBox="0 0 62 63" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M46.8316 0C42.9105 0 39.1501 1.59236 36.3775 4.42677C33.605 7.26119 32.0474 11.1055 32.0474 15.114C32.0474 19.1224 33.605 22.9667 36.3775 25.8011C39.1501 28.6355 42.9105 30.2279 46.8316 30.2279C50.7526 30.2279 54.513 28.6355 57.2856 25.8011C60.0582 22.9667 61.6158 19.1224 61.6158 15.114C61.6158 11.1055 60.0582 7.26119 57.2856 4.42677C54.513 1.59236 50.7526 0 46.8316 0Z"
-                        fill="currentColor"></path>
                 </svg>
             </a>
         </nav>
@@ -115,53 +100,63 @@
         </div>
     </div>
 
-    <main id="main" data-scroll-container>
-        <section id="page1" data-scroll-section>
-            <div class="hero-text">
-                <h1 data-scroll data-scroll-speed="-1">Change</h1>
-                <h1 data-scroll data-scroll-speed="-1.5">the course</h1>
-                <p class="hero-subtitle" data-scroll data-scroll-speed="-0.5">
-                    Empowering women. Creating impact. One meal at a time.
-                </p>
-            </div>
-            <div id="video-container" data-scroll data-scroll-speed="1">
-                <div id="play" role="button" tabindex="0">
-                    <i class="ri-play-fill"></i>
-                    <span>PLAY</span>
+    <main id="main">
+        <section id="hero">
+            <div class="hero-background">
+                <div class="hero-image-container">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2940&auto=format&fit=crop" 
+                         alt="Beautiful organic food preparation" 
+                         class="hero-image">
                 </div>
-                <video autoplay loop muted playsinline src="./video.mp4" aria-label="Two Good Co brand video"></video>
+                <div class="hero-overlay"></div>
             </div>
-            <div class="scroll-indicator" data-scroll data-scroll-speed="2">
-                <span>Scroll</span>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="line">Change</span>
+                        <span class="line">the course</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Empowering women. Creating impact. One meal at a time.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#about" class="cta-primary">Our Story</a>
+                        <a href="#shop" class="cta-secondary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
                 <div class="scroll-line"></div>
             </div>
         </section>
 
-        <section id="stats-section" data-scroll-section>
+        <section id="stats-section">
             <div class="stats-container">
-                <div class="stat-item" data-scroll data-scroll-speed="0.5">
+                <div class="stat-item">
                     <h2 class="stat-number" data-target="250">0</h2>
                     <p class="stat-label">Women Employed</p>
                 </div>
-                <div class="stat-item" data-scroll data-scroll-speed="0.7">
+                <div class="stat-item">
                     <h2 class="stat-number" data-target="50000">0</h2>
                     <p class="stat-label">Meals Served</p>
                 </div>
-                <div class="stat-item" data-scroll data-scroll-speed="0.9">
+                <div class="stat-item">
                     <h2 class="stat-number" data-target="15">0</h2>
                     <p class="stat-label">Years of Impact</p>
                 </div>
-                <div class="stat-item" data-scroll data-scroll-speed="1.1">
+                <div class="stat-item">
                     <h2 class="stat-number" data-target="1000">0</h2>
                     <p class="stat-label">Lives Changed</p>
                 </div>
             </div>
         </section>
 
-        <section id="about-section" data-scroll-section>
+        <section id="about-section">
             <div class="about-content">
-                <div class="about-text" data-scroll data-scroll-speed="0.5">
-                    <h2>Our Purpose</h2>
+                <div class="about-text">
+                    <span class="section-tag">Our Purpose</span>
+                    <h2>Building futures through food & community</h2>
                     <p class="large-text">
                         Two Good Co. is a social enterprise that provides employment and training
                         opportunities for women escaping domestic violence.
@@ -171,150 +166,227 @@
                         we're creating pathways to independence and rebuilding lives. Every purchase
                         supports our mission to create lasting change.
                     </p>
-                    <a href="#learn-more" class="cta-button">Learn More About Us</a>
+                    <a href="#learn-more" class="cta-button">Learn More About Us <i class="ri-arrow-right-line"></i></a>
                 </div>
-                <div class="about-image" data-scroll data-scroll-speed="1">
-                    <img src="https://cdn.sanity.io/images/w8f1ak3c/production/943f8f43b76b4e030f41deddca2dbb95417f2f4a-5504x8256.jpg/Christina-Maria-Jes-Lindsay-9143.jpg?w=640&h=947&auto=format"
-                        alt="Team member working in kitchen" loading="lazy">
-                </div>
-            </div>
-        </section>
-
-        <section id="page2" data-scroll-section>
-            <div id="elem1" class="elem">
-                <img data-scroll data-scroll-speed="1.2"
-                    src="https://cdn.sanity.io/images/w8f1ak3c/production/ee1c2e8894a4c47c4f4ce71b8973589f8a5045b2-902x1500.png/Rectangle%203.png?rect=1,0,900,1500&w=640&h=1067&fit=min&auto=format"
-                    alt="Social impact visual one">
-                <div class="dets" data-scroll data-scroll-speed="-1">
-                    <h3>Impact Stories</h3>
-                    <p>Real lives, real change</p>
-                </div>
-            </div>
-            <div id="elem2" class="elem">
-                <img data-scroll data-scroll-speed="1.5"
-                    src="https://cdn.sanity.io/images/w8f1ak3c/production/bb84b7106e978c37f5aa92c8d5781751b2e9d9f2-900x1500.png/Rectangle%202.png?w=640&h=1067&auto=format"
-                    alt="Organic product showcase">
-                <div class="dets" data-scroll data-scroll-speed="-1.2">
-                    <h3>Crafted with Love</h3>
-                    <p>Organic, sustainable, delicious</p>
-                </div>
-            </div>
-            <div id="elem3" class="elem">
-                <img data-scroll data-scroll-speed="1.1"
-                    src="https://cdn.sanity.io/images/w8f1ak3c/production/d3151106849ff2494d66916cf554c68a0603444d-902x1500.png/Rectangle%20220.png?rect=1,0,900,1500&w=640&h=1067&fit=min&auto=format"
-                    alt="Community kitchen">
-                <div class="dets" data-scroll data-scroll-speed="-1">
-                    <h3>Our Mission</h3>
-                    <p>Creating opportunities</p>
+                <div class="about-images">
+                    <div class="about-image-main">
+                        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2070&auto=format&fit=crop" 
+                             alt="Team member working with fresh ingredients" 
+                             loading="lazy">
+                    </div>
+                    <div class="about-image-accent">
+                        <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=2068&auto=format&fit=crop" 
+                             alt="Organic products" 
+                             loading="lazy">
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="page3" data-scroll-section>
-            <div class="section-header" data-scroll>
+        <section id="featured-gallery">
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2940&auto=format&fit=crop" 
+                         alt="Fresh organic ingredients" 
+                         loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3>Impact Stories</h3>
+                        <p>Real lives, real change</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2874&auto=format&fit=crop" 
+                         alt="Handcrafted food products" 
+                         loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3>Crafted with Love</h3>
+                        <p>Organic, sustainable, delicious</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2940&auto=format&fit=crop" 
+                         alt="Community kitchen workspace" 
+                         loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3>Our Mission</h3>
+                        <p>Creating opportunities</p>
+                    </div>
+                </div>
+                <div class="gallery-item tall">
+                    <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=2068&auto=format&fit=crop" 
+                         alt="Beautiful packaging and products" 
+                         loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3>Beautiful Design</h3>
+                        <p>Every detail matters</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products-section">
+            <div class="section-header">
+                <span class="section-tag">Shop</span>
                 <h2>Featured Products</h2>
                 <p>Every purchase creates employment and supports our mission</p>
             </div>
-            <div class="child" id="child1" data-scroll>
+            <div class="products-grid">
                 <div class="product-card">
-                    <img src="https://cdn.sanity.io/images/w8f1ak3c/production/d6a2a4be8e3063d64648773f57f5f447609a93ab-5000x5000.png/Love-Care-Pack-Expanded-Two-Good-Co.png?w=1024&h=1024&auto=format"
-                        alt="Love Care Pack Item 1" loading="lazy">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556910109-f48f3e488569?q=80&w=2070&auto=format&fit=crop" 
+                             alt="Love & Care Pack" 
+                             loading="lazy">
+                        <div class="product-badge">Bestseller</div>
+                    </div>
                     <div class="product-info">
                         <h3>Love & Care Pack</h3>
-                        <p class="price">$45.00</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <p class="product-description">A thoughtfully curated collection of organic essentials</p>
+                        <div class="product-footer">
+                            <p class="price">$45.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="child" id="child2" data-scroll>
                 <div class="product-card">
-                    <img src="https://cdn.sanity.io/images/w8f1ak3c/production/d6a2a4be8e3063d64648773f57f5f447609a93ab-5000x5000.png/Love-Care-Pack-Expanded-Two-Good-Co.png?w=1024&h=1024&auto=format"
-                        alt="Love Care Pack Item 2" loading="lazy">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?q=80&w=2070&auto=format&fit=crop" 
+                             alt="Wellness Bundle" 
+                             loading="lazy">
+                    </div>
                     <div class="product-info">
                         <h3>Wellness Bundle</h3>
-                        <p class="price">$52.00</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <p class="product-description">Nourishing products for body and soul</p>
+                        <div class="product-footer">
+                            <p class="price">$52.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="child" id="child3" data-scroll>
                 <div class="product-card">
-                    <img src="https://cdn.sanity.io/images/w8f1ak3c/production/d6a2a4be8e3063d64648773f57f5f447609a93ab-5000x5000.png/Love-Care-Pack-Expanded-Two-Good-Co.png?w=1024&h=1024&auto=format"
-                        alt="Love Care Pack Item 3" loading="lazy">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556910110-2c8854cf42e3?q=80&w=2070&auto=format&fit=crop" 
+                             alt="Gift Collection" 
+                             loading="lazy">
+                        <div class="product-badge">New</div>
+                    </div>
                     <div class="product-info">
                         <h3>Gift Collection</h3>
-                        <p class="price">$38.00</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <p class="product-description">Perfect for sharing love and support</p>
+                        <div class="product-footer">
+                            <p class="price">$38.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="child" id="child4" data-scroll>
                 <div class="product-card">
-                    <img src="https://cdn.sanity.io/images/w8f1ak3c/production/d6a2a4be8e3063d64648773f57f5f447609a93ab-5000x5000.png/Love-Care-Pack-Expanded-Two-Good-Co.png?w=1024&h=1024&auto=format"
-                        alt="Love Care Pack Item 4" loading="lazy">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2940&auto=format&fit=crop" 
+                             alt="Essentials Pack" 
+                             loading="lazy">
+                    </div>
                     <div class="product-info">
                         <h3>Essentials Pack</h3>
-                        <p class="price">$42.00</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <p class="product-description">Daily staples made with care</p>
+                        <div class="product-footer">
+                            <p class="price">$42.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="testimonials" data-scroll-section>
+        <section id="impact-story">
+            <div class="impact-content">
+                <div class="impact-image">
+                    <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=2940&auto=format&fit=crop" 
+                         alt="Women working together" 
+                         loading="lazy">
+                </div>
+                <div class="impact-text">
+                    <span class="section-tag">Impact</span>
+                    <h2>Every purchase makes a difference</h2>
+                    <p>
+                        When you buy from Two Good Co., you're not just purchasing products—you're 
+                        investing in women's futures. Every item sold creates employment, provides 
+                        training, and offers a pathway to independence for women rebuilding their lives.
+                    </p>
+                    <div class="impact-stats-inline">
+                        <div class="inline-stat">
+                            <strong>100%</strong>
+                            <span>of profits reinvested</span>
+                        </div>
+                        <div class="inline-stat">
+                            <strong>6 months</strong>
+                            <span>average program duration</span>
+                        </div>
+                        <div class="inline-stat">
+                            <strong>95%</strong>
+                            <span>employment retention</span>
+                        </div>
+                    </div>
+                    <a href="#impact" class="cta-button">Read Impact Stories <i class="ri-arrow-right-line"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials">
             <div class="testimonials-container">
-                <h2 data-scroll>Stories of Change</h2>
+                <span class="section-tag">Voices</span>
+                <h2>Stories of Change</h2>
                 <div class="testimonial-slider">
                     <div class="testimonial-item active">
                         <blockquote>
-                            "Two Good Co gave me more than a job - they gave me hope, dignity, and a future.
+                            "Two Good Co gave me more than a job—they gave me hope, dignity, and a future.
                             I'm now able to support my children and rebuild our lives."
                         </blockquote>
-                        <cite>- Sarah, Program Graduate</cite>
+                        <cite>— Sarah, Program Graduate</cite>
                     </div>
                     <div class="testimonial-item">
                         <blockquote>
                             "The training and support I received helped me discover skills I never knew I had.
                             I'm now confident, independent, and proud of what I've achieved."
                         </blockquote>
-                        <cite>- Maria, Kitchen Team</cite>
+                        <cite>— Maria, Kitchen Team</cite>
                     </div>
                     <div class="testimonial-item">
                         <blockquote>
                             "This place changed my life. The women here became my family, and together
                             we're building something beautiful."
                         </blockquote>
-                        <cite>- Jennifer, Production Team</cite>
+                        <cite>— Jennifer, Production Team</cite>
                     </div>
                 </div>
                 <div class="testimonial-controls">
-                    <button class="prev-testimonial" aria-label="Previous testimonial"><i
-                            class="ri-arrow-left-line"></i></button>
+                    <button class="prev-testimonial" aria-label="Previous testimonial">
+                        <i class="ri-arrow-left-line"></i>
+                    </button>
                     <div class="testimonial-dots"></div>
-                    <button class="next-testimonial" aria-label="Next testimonial"><i
-                            class="ri-arrow-right-line"></i></button>
+                    <button class="next-testimonial" aria-label="Next testimonial">
+                        <i class="ri-arrow-right-line"></i>
+                    </button>
                 </div>
             </div>
         </section>
 
-
-        <section id="newsletter" data-scroll-section>
-            <div class="newsletter-container" data-scroll>
-                <h2>Stay Connected</h2>
-                <p>Join our community and receive updates on our impact, new products, and exclusive offers.</p>
-                <form class="newsletter-form" id="newsletter-form">
-                    <input type="email" placeholder="Enter your email" required aria-label="Email address">
-                    <button type="submit">Subscribe</button>
-                </form>
-                <p class="newsletter-privacy">We respect your privacy. Unsubscribe anytime.</p>
+        <section id="newsletter">
+            <div class="newsletter-container">
+                <div class="newsletter-content">
+                    <h2>Stay Connected</h2>
+                    <p>Join our community and receive updates on our impact, new products, and exclusive offers.</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required aria-label="Email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <p class="newsletter-privacy">We respect your privacy. Unsubscribe anytime.</p>
+                </div>
             </div>
         </section>
 
-
-        <footer id="footer" data-scroll-section>
+        <footer id="footer">
             <div class="footer-inner">
                 <div class="footer-main">
-                    <div class="footer-column">
+                    <div class="footer-column brand">
                         <h3>Two Good Co.</h3>
                         <p>A social enterprise creating employment and training opportunities for women escaping
                             domestic violence.</p>
@@ -369,9 +441,6 @@
         <i class="ri-arrow-up-line"></i>
     </button>
 
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
 </body>
 
