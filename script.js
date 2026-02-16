@@ -1,505 +1,375 @@
-const scroll = new LocomotiveScroll({
-  el: document.querySelector('#main'),
-  smooth: true,
-  multiplier: 1,
-  class: 'is-reveal'
-});
-
-gsap.registerPlugin(ScrollTrigger);
-
-scroll.on('scroll', ScrollTrigger.update);
-
-ScrollTrigger.scrollerProxy('#main', {
-  scrollTop(value) {
-    return arguments.length
-      ? scroll.scrollTo(value, 0, 0)
-      : scroll.scroll.instance.scroll.y;
-  },
-  getBoundingClientRect() {
-    return {
-      top: 0,
-      left: 0,
-      width: window.innerWidth,
-      height: window.innerHeight
-    };
-  },
-  pinType: document.querySelector('#main').style.transform ? 'transform' : 'fixed'
-});
-
-ScrollTrigger.addEventListener('refresh', () => scroll.update());
-ScrollTrigger.refresh();
-
+// Loading Screen
 window.addEventListener('load', () => {
-  const loadingScreen = document.getElementById('loading-screen');
-  setTimeout(() => {
-    loadingScreen.classList.add('hidden');
-    scroll.update();
-  }, 1500);
+    const loadingScreen = document.getElementById('loading-screen');
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+    }, 1500);
 });
 
+// Custom Cursor
 const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursor-follower');
-let mouseX = 0, mouseY = 0;
-let followerX = 0, followerY = 0;
 
 document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-
-  cursor.style.transform = `translate(${mouseX - 5}px, ${mouseY - 5}px)`;
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    
+    setTimeout(() => {
+        cursorFollower.style.left = e.clientX + 'px';
+        cursorFollower.style.top = e.clientY + 'px';
+    }, 100);
 });
 
-function animateFollower() {
-  followerX += (mouseX - followerX) * 0.1;
-  followerY += (mouseY - followerY) * 0.1;
-
-  cursorFollower.style.transform = `translate(${followerX - 20}px, ${followerY - 20}px)`;
-  requestAnimationFrame(animateFollower);
-}
-animateFollower();
-
-const hoverElements = document.querySelectorAll('a, button, .product-card, .elem');
-hoverElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.classList.add('expand');
-    cursorFollower.classList.add('expand');
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.classList.remove('expand');
-    cursorFollower.classList.remove('expand');
-  });
+// Cursor hover effects
+document.querySelectorAll('a, button, .product-card').forEach(element => {
+    element.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(0.5)';
+        cursorFollower.style.transform = 'scale(1.5)';
+    });
+    
+    element.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+        cursorFollower.style.transform = 'scale(1)';
+    });
 });
 
+// Navigation Scroll Effect
 const nav = document.getElementById('nav');
-scroll.on('scroll', (args) => {
-  if (args.scroll.y > 100) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
 });
 
+// Menu Toggle
 const menuBtn = document.querySelector('.menu-btn');
-const fullscreenMenu = document.getElementById('fullscreen-menu');
-const closeMenuBtn = document.querySelector('.close-menu');
+const fullscreenMenu = document.querySelector('.fullscreen-menu');
+const closeMenu = document.querySelector('.close-menu');
 const menuLinks = document.querySelectorAll('.menu-link');
 
 menuBtn.addEventListener('click', () => {
-  fullscreenMenu.classList.add('active');
-  document.body.style.overflow = 'hidden';
+    fullscreenMenu.classList.add('active');
+    document.body.style.overflow = 'hidden';
 });
 
-closeMenuBtn.addEventListener('click', () => {
-  fullscreenMenu.classList.remove('active');
-  document.body.style.overflow = '';
+closeMenu.addEventListener('click', () => {
+    fullscreenMenu.classList.remove('active');
+    document.body.style.overflow = 'auto';
 });
 
 menuLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    fullscreenMenu.classList.remove('active');
-    document.body.style.overflow = '';
-  });
+    link.addEventListener('click', () => {
+        fullscreenMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
 });
 
-const playButton = document.getElementById('play');
-const video = document.querySelector('#video-container video');
+// Stats Counter Animation
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            animateCounter(entry.target);
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
 
-playButton.addEventListener('click', () => {
-  if (video.paused) {
-    video.play();
-    playButton.style.opacity = '0';
-    setTimeout(() => {
-      playButton.style.display = 'none';
-    }, 300);
-  }
+document.querySelectorAll('.stat-item').forEach(item => {
+    statsObserver.observe(item);
 });
 
-video.addEventListener('click', () => {
-  if (!video.paused) {
-    video.pause();
-    playButton.style.display = 'flex';
-    setTimeout(() => {
-      playButton.style.opacity = '1';
-    }, 10);
-  }
-});
-
-const statNumbers = document.querySelectorAll('.stat-number');
-const statsSection = document.getElementById('stats-section');
-let statsCounted = false;
-
-const animateStats = () => {
-  statNumbers.forEach(stat => {
-    const target = parseInt(stat.getAttribute('data-target'));
+function animateCounter(element) {
+    const numberElement = element.querySelector('.stat-number');
+    const target = parseInt(numberElement.getAttribute('data-target'));
     const duration = 2000;
     const increment = target / (duration / 16);
     let current = 0;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            numberElement.textContent = target.toLocaleString();
+            clearInterval(timer);
+        } else {
+            numberElement.textContent = Math.floor(current).toLocaleString();
+        }
+    }, 16);
+}
 
-    const updateCount = () => {
-      current += increment;
-      if (current < target) {
-        stat.textContent = Math.floor(current).toLocaleString();
-        requestAnimationFrame(updateCount);
-      } else {
-        stat.textContent = target.toLocaleString() + (target >= 1000 ? '+' : '');
-      }
-    };
-
-    updateCount();
-    stat.parentElement.classList.add('animate');
-  });
+// Scroll Animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
 };
 
-scroll.on('scroll', (args) => {
-  if (!statsCounted) {
-    const statsRect = statsSection.getBoundingClientRect();
-    if (statsRect.top < window.innerHeight * 0.75) {
-      animateStats();
-      statsCounted = true;
-    }
-  }
+const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Add scroll animation to elements
+document.querySelectorAll('.about-text, .about-images, .product-card, .gallery-item, .impact-content > *').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    scrollObserver.observe(el);
 });
 
-const testimonials = document.querySelectorAll('.testimonial-item');
-const prevBtn = document.querySelector('.prev-testimonial');
-const nextBtn = document.querySelector('.next-testimonial');
-const dotsContainer = document.querySelector('.testimonial-dots');
-
+// Testimonials Slider
 let currentTestimonial = 0;
+const testimonialItems = document.querySelectorAll('.testimonial-item');
+const testimonialDots = document.querySelector('.testimonial-dots');
 
-testimonials.forEach((_, index) => {
-  const dot = document.createElement('div');
-  dot.classList.add('dot');
-  if (index === 0) dot.classList.add('active');
-  dot.addEventListener('click', () => goToTestimonial(index));
-  dotsContainer.appendChild(dot);
+// Create dots
+testimonialItems.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('testimonial-dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToTestimonial(index));
+    testimonialDots.appendChild(dot);
 });
 
-const dots = document.querySelectorAll('.dot');
+const dots = document.querySelectorAll('.testimonial-dot');
 
-function showTestimonial(index) {
-  testimonials.forEach(t => t.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-
-  testimonials[index].classList.add('active');
-  dots[index].classList.add('active');
+function updateTestimonials() {
+    testimonialItems.forEach((item, index) => {
+        item.classList.remove('active');
+        dots[index].classList.remove('active');
+    });
+    
+    testimonialItems[currentTestimonial].classList.add('active');
+    dots[currentTestimonial].classList.add('active');
 }
 
 function goToTestimonial(index) {
-  currentTestimonial = index;
-  showTestimonial(currentTestimonial);
+    currentTestimonial = index;
+    updateTestimonials();
 }
 
-prevBtn.addEventListener('click', () => {
-  currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-  showTestimonial(currentTestimonial);
+document.querySelector('.next-testimonial').addEventListener('click', () => {
+    currentTestimonial = (currentTestimonial + 1) % testimonialItems.length;
+    updateTestimonials();
 });
 
-nextBtn.addEventListener('click', () => {
-  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-  showTestimonial(currentTestimonial);
+document.querySelector('.prev-testimonial').addEventListener('click', () => {
+    currentTestimonial = (currentTestimonial - 1 + testimonialItems.length) % testimonialItems.length;
+    updateTestimonials();
 });
 
+// Auto-rotate testimonials
 setInterval(() => {
-  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-  showTestimonial(currentTestimonial);
-}, 5000);
+    currentTestimonial = (currentTestimonial + 1) % testimonialItems.length;
+    updateTestimonials();
+}, 6000);
 
-const cartBtn = document.querySelector('.cart-btn');
+// Add to Cart Animation
+const addToCartButtons = document.querySelectorAll('.add-to-cart');
 const cartCount = document.querySelector('.cart-count');
-const addToCartBtns = document.querySelectorAll('.add-to-cart');
-
 let cartItems = 0;
 
-addToCartBtns.forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    cartItems++;
-    cartCount.textContent = cartItems;
-
-
-    btn.textContent = 'Added!';
-    btn.style.background = '#4CAF50';
-
-    setTimeout(() => {
-      btn.textContent = 'Add to Cart';
-      btn.style.background = '';
-    }, 2000);
-
-
-    cartBtn.style.transform = 'scale(1.2)';
-    setTimeout(() => {
-      cartBtn.style.transform = '';
-    }, 300);
-  });
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Update cart count
+        cartItems++;
+        cartCount.textContent = cartItems;
+        
+        // Animation feedback
+        const originalText = button.textContent;
+        button.textContent = 'Added!';
+        button.style.background = 'var(--accent-gold)';
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = '';
+        }, 1500);
+        
+        // Cart icon animation
+        const cartBtn = document.querySelector('.cart-btn');
+        cartBtn.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            cartBtn.style.transform = 'scale(1)';
+        }, 300);
+    });
 });
 
+// Newsletter Form
 const newsletterForm = document.getElementById('newsletter-form');
 
 newsletterForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const emailInput = newsletterForm.querySelector('input[type="email"]');
-  const submitBtn = newsletterForm.querySelector('button');
-
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = 'Subscribing...';
-  submitBtn.disabled = true;
-
-  setTimeout(() => {
-    submitBtn.textContent = 'Subscribed! ✓';
-    submitBtn.style.background = '#4CAF50';
-    emailInput.value = '';
-
-    setTimeout(() => {
-      submitBtn.textContent = originalText;
-      submitBtn.style.background = '';
-      submitBtn.disabled = false;
-    }, 3000);
-  }, 1500);
-});
-
-const backToTopBtn = document.getElementById('back-to-top');
-
-scroll.on('scroll', (args) => {
-  if (args.scroll.y > 500) {
-    backToTopBtn.classList.add('show');
-  } else {
-    backToTopBtn.classList.remove('show');
-  }
-});
-
-backToTopBtn.addEventListener('click', () => {
-  scroll.scrollTo(0);
-});
-
-gsap.from('.hero-text h1', {
-  y: 100,
-  opacity: 0,
-  duration: 1,
-  stagger: 0.2,
-  ease: 'power3.out'
-});
-
-gsap.from('#video-container', {
-  scrollTrigger: {
-    trigger: '#video-container',
-    scroller: '#main',
-    start: 'top 80%',
-    end: 'top 20%',
-    scrub: 1
-  },
-  scale: 0.8,
-  opacity: 0
-});
-
-gsap.utils.toArray('.elem').forEach((elem, i) => {
-  gsap.from(elem, {
-    scrollTrigger: {
-      trigger: elem,
-      scroller: '#main',
-      start: 'top 80%',
-      end: 'bottom 20%',
-      scrub: 1
-    },
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    delay: i * 0.1
-  });
-});
-
-gsap.from('.product-card', {
-  scrollTrigger: {
-    trigger: '#page3',
-    scroller: '#main',
-    start: 'top 60%'
-  },
-  y: 100,
-  opacity: 0,
-  duration: 0.8,
-  stagger: 0.2,
-  ease: 'power3.out'
-});
-
-gsap.from('.about-text', {
-  scrollTrigger: {
-    trigger: '#about-section',
-    scroller: '#main',
-    start: 'top 60%'
-  },
-  x: -100,
-  opacity: 0,
-  duration: 1,
-  ease: 'power3.out'
-});
-
-gsap.from('.about-image', {
-  scrollTrigger: {
-    trigger: '#about-section',
-    scroller: '#main',
-    start: 'top 60%'
-  },
-  x: 100,
-  opacity: 0,
-  duration: 1,
-  ease: 'power3.out'
-});
-
-gsap.from('.newsletter-container', {
-  scrollTrigger: {
-    trigger: '#newsletter',
-    scroller: '#main',
-    start: 'top 70%'
-  },
-  y: 50,
-  opacity: 0,
-  duration: 1,
-  ease: 'power3.out'
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      scroll.scrollTo(target);
+    
+    const email = newsletterForm.querySelector('input').value;
+    const button = newsletterForm.querySelector('button');
+    
+    if (email) {
+        const originalText = button.textContent;
+        button.textContent = 'Subscribed!';
+        button.style.background = 'var(--accent-earth)';
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = '';
+            newsletterForm.reset();
+        }, 2000);
     }
-  });
 });
 
-const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+// Back to Top Button
+const backToTop = document.getElementById('back-to-top');
 
-if ('IntersectionObserver' in window) {
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src || img.src;
-        img.classList.add('loaded');
-        observer.unobserve(img);
-      }
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+        backToTop.classList.add('visible');
+    } else {
+        backToTop.classList.remove('visible');
+    }
+});
+
+backToTop.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
-  });
-
-  lazyImages.forEach(img => imageObserver.observe(img));
-}
-
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-const handleResize = debounce(() => {
-  scroll.update();
-  ScrollTrigger.refresh();
-}, 250);
-
-window.addEventListener('resize', handleResize);
-
-playButton.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    playButton.click();
-  }
 });
 
-const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-const modal = fullscreenMenu;
-
-function trapFocus(element) {
-  const focusableContent = element.querySelectorAll(focusableElements);
-  const firstFocusable = focusableContent[0];
-  const lastFocusable = focusableContent[focusableContent.length - 1];
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Tab' || e.keyCode === 9) {
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusable) {
-          lastFocusable.focus();
-          e.preventDefault();
+// Smooth Scroll for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const offsetTop = target.offsetTop - 80;
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
         }
-      } else {
-        if (document.activeElement === lastFocusable) {
-          firstFocusable.focus();
-          e.preventDefault();
+    });
+});
+
+// Parallax Effect for Hero Image
+window.addEventListener('scroll', () => {
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        const scrolled = window.pageYOffset;
+        const parallax = scrolled * 0.5;
+        heroImage.style.transform = `translateY(${parallax}px) scale(1.1)`;
+    }
+});
+
+// Gallery Hover Effect Enhancement
+document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        this.style.zIndex = '10';
+    });
+    
+    item.addEventListener('mouseleave', function() {
+        this.style.zIndex = '1';
+    });
+});
+
+// Product Card Tilt Effect (3D)
+document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+    });
+});
+
+// Lazy Loading Images
+const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.src;
+            img.classList.add('loaded');
+            observer.unobserve(img);
         }
-      }
-    }
-    if (e.key === 'Escape') {
-      closeMenuBtn.click();
-    }
-  });
-}
-
-menuBtn.addEventListener('click', () => {
-  trapFocus(modal);
+    });
 });
 
-const preloadVideo = () => {
-  const video = document.querySelector('#video-container video');
-  if (video) {
-    video.load();
-  }
-};
-
-window.addEventListener('load', preloadVideo);
-
-console.log('%c Welcome to Two Good Co! ', 'background: #2e2e2e; color: #f7f7f7; font-size: 20px; padding: 10px;');
-console.log('%c Making a difference, one meal at a time ', 'color: #d4a574; font-size: 14px;');
-
-window.addEventListener('error', (e) => {
-  console.error('An error occurred:', e.error);
+document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+    imageObserver.observe(img);
 });
 
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    video.pause();
-  }
+// Add stagger animation to gallery items
+const galleryItems = document.querySelectorAll('.gallery-item');
+galleryItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    item.style.transitionDelay = `${index * 0.1}s`;
 });
 
-function showCookieConsent() {
-  const consent = localStorage.getItem('cookieConsent');
-  if (!consent) {
-    console.log('Cookie consent not given');
-  }
-}
+const galleryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1 });
 
-function trackEvent(category, action, label) {
-  console.log(`Track: ${category} - ${action} - ${label}`);
-}
-
-addToCartBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    trackEvent('E-commerce', 'Add to Cart', btn.closest('.product-card').querySelector('h3').textContent);
-  });
+galleryItems.forEach(item => {
+    galleryObserver.observe(item);
 });
 
-function init() {
-  console.log('Two Good Co. website initialized successfully! 🎉');
-  scroll.update();
-  ScrollTrigger.refresh();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
-
-window.addEventListener('load', () => {
-  if (window.performance && window.performance.timing) {
-    const perfData = window.performance.timing;
-    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-    console.log(`Page load time: ${pageLoadTime}ms`);
-  }
+// Add animation to products on scroll
+const productCards = document.querySelectorAll('.product-card');
+productCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(50px)';
+    card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    card.style.transitionDelay = `${index * 0.15}s`;
 });
 
-if ('serviceWorker' in navigator) {
-}
+const productsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1 });
+
+productCards.forEach(card => {
+    productsObserver.observe(card);
+});
+
+// Search button functionality (placeholder)
+document.querySelector('.search-btn').addEventListener('click', () => {
+    alert('Search functionality coming soon!');
+});
+
+// Console Easter Egg
+console.log('%c✨ Two Good Co. ✨', 'font-size: 24px; color: #c9a961; font-weight: bold;');
+console.log('%cChanging lives through beautiful food and design', 'font-size: 14px; color: #8b7355;');
+console.log('%cInterested in our mission? Visit us at twogood.com.au', 'font-size: 12px; color: #6a6a6a;');
