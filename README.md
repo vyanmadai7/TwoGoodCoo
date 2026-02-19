@@ -1,6 +1,6 @@
-## Two Good Co. - Enhanced Website
+## Two Good Co. - Updated Website
 Upgraded version of the Two Good Co. website with modern features and animations.<br>
-What's New<br>
+What's New
 
 ## New Sections:
 
