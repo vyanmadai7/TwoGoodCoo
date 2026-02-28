@@ -1,4 +1,4 @@
-## Two Good Cooperative. __Updated Website
+## Two Good Cooperative. __Updated Website__
 Upgraded version of the Two Good Co. website with modern features and animations.<br>
 What's New
 
